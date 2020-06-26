@@ -1,0 +1,12 @@
+<table class="table table-dark">
+    <thead>
+        <th>#</th>
+        <th>Teste</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of info$ | async">
+            <th scope="row">Casos</th>
+            <td>{{ item.Cases }}</td>
+        </tr>
+    </tbody>
+</table>
