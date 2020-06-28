@@ -1,8 +1,14 @@
+import { element } from 'protractor';
 
-import { CountryService } from './../services/country.service';
-import { Component, OnInit } from '@angular/core';
-import { CovidCases } from '../models/cases';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { Label } from 'ng2-charts';
+
+import { CountryService } from '../../../services/country.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { config } from 'process';
+import { CovidCases } from 'src/app/models/cases';
 
 @Component({
   selector: 'app-chart',
@@ -10,11 +16,38 @@ import { DatePipe } from '@angular/common';
 })
 export class ChartComponent implements OnInit {
 
+  @ViewChild('coutryCanvas', { static: true }) element: ElementRef;
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+
+  public barChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56], label: 'Confirmed' },
+    { data: [28, 48, 40, 19, 86], label: 'Recovered' },
+    { data: [28, 48, 40, 19, 86], label: 'Deaths' }
+  ];
+
+  public barChartLabels: Label[] = ['Brazil'];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+
   public cases: CovidCases;
+  public covidCase: number = 0;
+
+  public dateToday = new Date;
+
   private selectedCountry = 'brazil';
   private statusOfCases = 'recovered'
-  public dateToday = new Date;
-  public covidCase: number = 0;
+
 
   constructor(
     private countryService: CountryService,
@@ -62,5 +95,18 @@ export class ChartComponent implements OnInit {
       return true
     }
     return false
+  }
+
+  public randomize(): void {
+    // Only Change 3 values
+    const data = [
+      Math.round(Math.random() * 100),
+      59,
+      80,
+      (Math.random() * 100),
+      56,
+      (Math.random() * 100),
+      40];
+    this.barChartData[0].data = data;
   }
 }

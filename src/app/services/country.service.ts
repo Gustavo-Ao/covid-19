@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class CountryService {
 
-  private readonly API = 'https://api.covid19api.com/country/'
+  private readonly API = 'https://api.covid19api.com/country'
 
   constructor(
     private http: HttpClient,

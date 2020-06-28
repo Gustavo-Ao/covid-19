@@ -1,20 +1,24 @@
-import { CountryService } from './services/country.service';
+import { ChartComponent } from './components/pages/chart/chart.component';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
-import { ChartComponent } from './chart/chart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChartComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ChartsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
