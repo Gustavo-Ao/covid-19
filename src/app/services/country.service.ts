@@ -10,13 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class CountryService {
 
-  private readonly API = 'https://api.covid19api.com/country/'
+  private readonly API = 'https://api.covid19api.com/country'
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  public getDeathsOfCountry(country: string, status: string): Observable<CovidCases> {
+  public getCasesOfCountry(country: string, status: string): Observable<CovidCases> {
     return this.http.get(`${this.API}/${country}/status/${status}`);
   }
 }
