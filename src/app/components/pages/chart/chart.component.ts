@@ -46,7 +46,7 @@ export class ChartComponent implements OnInit {
   public dateToday = new Date;
 
   private selectedCountry = 'brazil';
-  private statusOfCases = 'recovered'
+  private statusOfCases = 'confirmed'
 
 
   constructor(
