@@ -1,12 +1,11 @@
-<table class="table table-dark">
-    <thead>
-        <th>#</th>
-        <th>Teste</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of info$ | async">
-            <th scope="row">Casos</th>
-            <td>{{ item.Cases }}</td>
-        </tr>
-    </tbody>
+<table *ngIf="this.cases" class="table table-dark">
+	<thead>
+		<th>#</th>
+		<th>Teste</th>
+	</thead>
+	<tbody>
+		<tr *ngFor="let case of this.cases">
+			<td *ngIf="compareDates(case.Date, case.Cases)">{{ this.covidCase }}</td>
+		</tr>
+	</tbody>
 </table>

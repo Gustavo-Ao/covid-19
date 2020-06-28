@@ -1,8 +1,9 @@
-import { Info } from './../models/info';
+import { CovidCases } from './../models/cases';
+
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,7 @@ export class CountryService {
     private http: HttpClient,
   ) { }
 
-  public getCountry(country: string) {
-    return this.http.get<Info[]>(`${this.API}/${country}/status/deaths`)
-      .pipe(
-        tap(console.log)
-      )
-      
+  public getDeathsOfCountry(country: string, status: string): Observable<CovidCases> {
+    return this.http.get(`${this.API}/${country}/status/${status}`);
   }
 }
