@@ -1,6 +1,6 @@
 # Covid
 
-Será possível visliazar em tabela e gráficos alguns países listando casos recuparados, confimados e óbitos. Projeto em estado de desenvolvimento.
+Será possível visualizar em tabela e gráfico informações de alguns países listando casos recuparados, confimados e óbitos de COVID-19. Projeto em estado de desenvolvimento.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
