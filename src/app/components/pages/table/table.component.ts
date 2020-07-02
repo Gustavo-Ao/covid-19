@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+
 import { CountryService } from './../../../services/country.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CovidCases } from 'src/app/models/cases';
 import { DatePipe } from '@angular/common';
 
@@ -20,6 +20,8 @@ export class TableComponent implements OnInit {
   public recoveredCases: number = 0;
   public dateToday = new Date;
 
+  public numberDeath: any[];
+
   constructor(
     private countryService: CountryService,
     private datePipe: DatePipe
@@ -27,11 +29,12 @@ export class TableComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    this.getDeathsByCountry(this.selectedCountry, this.statusOfCases);
+    this.getDeathsByCountry(this.selectedCountry);
   }
 
-  public async getDeathsByCountry(country: string, status: string) {
-    await this.countryService.getCasesOfCountry(country, status).subscribe(data => this.cases = data);
+  public async getDeathsByCountry(country: string) {
+    await this.countryService.getCasesOfCountry(country, 'deaths').subscribe(data => this.numberDeath = data);
+    console.log('Number', this.numberDeath);
   }
 
   public getDateYesterday(): string {

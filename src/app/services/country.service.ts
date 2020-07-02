@@ -16,7 +16,7 @@ export class CountryService {
     private http: HttpClient,
   ) { }
 
-  public getCasesOfCountry(country: string, status: string): Observable<CovidCases> {
+  public getCasesOfCountry(country: string, status: string): Observable<any> {
     return this.http.get(`${this.API}/${country}/status/${status}`);
   }
 }
