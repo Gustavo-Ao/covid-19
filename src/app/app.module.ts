@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TableComponent } from './components/pages/table/table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { TableComponent } from './components/pages/table/table.component';
     BrowserModule,
     HttpClientModule,
     ChartsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

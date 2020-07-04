@@ -1,3 +1,49 @@
 table {
-    margin-top: 20px;
+    margin-top: 10px;
+}
+
+.date-cases {
+    margin-top: 30px;
+}
+
+.buttons {
+    margin-top: 35px;
+}
+
+@media all and (max-width: 800px) {
+
+    table tbody tr td {
+
+        display: block;
+        text-align: right;
+    }
+
+    table tbody tr td:before {
+
+        content: attr(data-title);
+        position: absolute;
+        left: 15px;
+        display: block;
+        font-weight: 600;
+        font-size: 1em;
+    }
+
+    table {
+
+        border: none;
+    }
+
+    table thead {
+
+        display: none;
+    }
+
+    table tbody tr {
+
+        margin-bottom: 10px;
+        display: block;
+        border: 1px solid #dad6eb;
+    }
+
+
 }
