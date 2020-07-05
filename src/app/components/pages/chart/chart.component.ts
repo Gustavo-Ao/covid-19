@@ -12,7 +12,8 @@ import { CovidCases } from 'src/app/models/cases';
 
 @Component({
   selector: 'app-chart',
-  templateUrl: './chart.component.html'
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
 

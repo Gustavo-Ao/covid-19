@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs';
+
 import { CountryService } from './../../../services/country.service';
 import { Component, OnInit } from '@angular/core';
 import { CovidCases } from 'src/app/models/cases';
 import { DatePipe } from '@angular/common';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -11,29 +12,38 @@ import { DatePipe } from '@angular/common';
 })
 export class TableComponent implements OnInit {
 
-  public headers = ["ID", "Country", "Confirmed", "Recovered", "Deaths"];
+  public headers = ["Country", "Confirmed", "Recovered", "Deaths"];
+  public countries = ["Brazil", "Argentina", "Portugal", "China", "Uruguay"];
 
   public cases: CovidCases;
 
-  public selectedCountry = 'Brazil'
-  public statusOfCases = 'recovered';
   public recoveredCases: number = 0;
   public dateToday = new Date;
 
+  public formDateCases: FormGroup;
+
+  public numberDeath: any[];
+  public numberRecovered: any[];
+  public numberConfirmed: any[];
+
   constructor(
     private countryService: CountryService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) { }
 
-  public ngOnInit(): void {
+  public ngOnInit() {
 
-    this.getDeathsByCountry(this.selectedCountry, this.statusOfCases);
+    this.getConfirmed('Brazil');
   }
 
-  public async getDeathsByCountry(country: string, status: string) {
-    await this.countryService.getCasesOfCountry(country, status).subscribe(data => this.cases = data);
+
+  public async getConfirmed(country: string) {
+    await this.countryService.getCasesOfCountry(country, 'confirmed')
+      .subscribe(data => console.log(data));
   }
 
+
+  //metodos de data
   public getDateYesterday(): string {
     const date = this.dateToday.getDate() - 1;
     const month = this.dateToday.getMonth() + 1;
@@ -53,9 +63,8 @@ export class TableComponent implements OnInit {
     return date + 'T00:00:00Z';
   }
 
-  public compareDates(date: string, cases: number, coutry: string): boolean {
+  public compareDates(date: string, cases: number): boolean {
     if (date == this.formatDateToday()) {
-      console.log(date)
 
       this.recoveredCases = cases;
       return true

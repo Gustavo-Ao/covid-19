@@ -1,0 +1,36 @@
+.chart-cases {
+  margin-top: 30px;
+}
+
+.buttons {
+  margin-top: 33px;
+}
+.content-chart {
+  justify-content: center;
+}
+
+.canvas-cases {
+  width: 1000px;
+  height: 300px;
+}
+
+@media all and (max-width: 1100px) { 
+  .canvas-cases {
+    width: auto;
+    height: 300px;
+  }
+}
+
+@media all and (max-width: 1000px) { 
+  .canvas-cases {
+    width: auto;
+    height: 300px;
+  }
+}
+
+@media all and (max-width: 600px) { 
+  .canvas-cases {
+    width: auto;
+    min-height: 500px;
+  }
+}
