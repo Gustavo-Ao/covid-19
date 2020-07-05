@@ -7,10 +7,15 @@ table {
 }
 
 .buttons {
-    margin-top: 35px;
+    margin-top: 33px;
 }
 
 @media all and (max-width: 800px) {
+
+    .buttons {
+        margin-left: 20px;
+        align-items: center;
+    }
 
     table tbody tr td {
 

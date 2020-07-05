@@ -1,6 +1,6 @@
 
 import { CountryService } from './../../../services/country.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CovidCases } from 'src/app/models/cases';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
   public recoveredCases: number = 0;
   public dateToday = new Date;
 
-  public dateCases: FormGroup;
+  public formDateCases: FormGroup;
 
   public numberDeath: any[];
   public numberRecovered: any[];
@@ -28,7 +28,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     private countryService: CountryService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) { }
 
   public ngOnInit() {
@@ -36,20 +36,10 @@ export class TableComponent implements OnInit {
     this.getConfirmed('Brazil');
   }
 
-  // get's
-  // public async getDeaths(country: string) {
-  //   await this.countryService.getCasesOfCountry(country, 'deaths')
-  //     .subscribe(data => this.numberDeath = data);
-  // }
-
-  // public async getRecovered(country: string) {
-  //   await this.countryService.getCasesOfCountry(country, 'recovered')
-  //     .subscribe(data => this.numberRecovered = data);
-  // }
 
   public async getConfirmed(country: string) {
     await this.countryService.getCasesOfCountry(country, 'confirmed')
-      .subscribe(data => this.cases = data);
+      .subscribe(data => console.log(data));
   }
 
 

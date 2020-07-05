@@ -1,10 +1,25 @@
-<div>
-	<div>
-		<div style="display: block">
+<div class="container-12">
+	<form>
+		<div class="chart-cases row container justify-content-between">
+			<div class="form-group col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+				<label for="exampleFormControlSelect1">Countries</label>
+				<select class="form-control" id="exampleFormControlSelect1">
+					<option>1</option>
+				</select>
+			</div>
+
+			<div class="buttons form-group col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+				<button class="btn btn-wide btn-icon btn-dark mr-5">
+					<i class="fa fa-refresh mr-2"></i>Update
+				</button>
+			</div>
+		</div>
+
+		<div class="canvas-cases">
 			<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
 				[plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
 			</canvas>
 		</div>
-		<button type="button" color="btn btn-primary" (click)="randomize()">Update</button>
-	</div>
+
+	</form>
 </div>
