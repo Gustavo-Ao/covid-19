@@ -1,23 +1,37 @@
-import { CovidCases } from './../models/cases';
-
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
+import { Countries } from '../models/countries';
+
+interface GetCountryByDateDTO {
+  countrySlug: string;
+  fromDate: Date;
+  toDate: Date;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
 
-  private readonly API = 'https://api.covid19api.com/country'
+  private URL: string = 'https://api.covid19api.com';
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  public getCasesOfCountry(country: string, status: string) {
-    const data = this.http.get(`${this.API}/${country}/status/${status}`);
-    return data;
+  getCasesOfCountry({
+    countrySlug,
+    fromDate,
+    toDate,
+  }: GetCountryByDateDTO): Promise<Countries[]> {
+    const fromDateString = fromDate.toISOString();
+    const toDateString = toDate.toISOString();
+    const endpoint = `country/${countrySlug}?from=${fromDateString}&to=${toDateString}`;
+
+    return this.http
+      .get<Countries[]>(`${this.URL}/${endpoint}`)
+      .toPromise();
   }
 }

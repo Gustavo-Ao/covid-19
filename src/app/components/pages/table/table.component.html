@@ -1,58 +1,44 @@
 <div class="content-align-center">
-	<form [formGroup]="this.formDateCases">
 
-		<div class="date-cases row justify-content-between">
-			<div class="row">
-				<div class="form-group col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 ml-3">
-					<label for="">Date</label>
-					<input type="date" class="form-control">
-				</div>
-
-				<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
-					<button class="btn btn-wide btn-icon btn-secondary">
-						Search<i class="fa fa-search ml-2"></i>
-					</button>
-				</div>
+	<div class="date-cases row justify-content-between">
+		<div class="row">
+			<div class="form-group col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 ml-3">
+				<label for="">Date</label>
+				<input type="date" class="form-control">
 			</div>
 
-			<div class="row">
-				<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
-					<button class="btn btn-wide btn-icon btn-dark">
-						<i class="fa fa-refresh mr-2"></i>Update
-					</button>
-				</div>
+			<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+				<button class="btn btn-wide btn-icon btn-secondary">
+					Search<i class="fa fa-search ml-2"></i>
+				</button>
 			</div>
 		</div>
 
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">Country</th>
-					<th scope="col">Confirmed</th>
-					<th scope="col">Recovered</th>
-					<th scope="col">Death</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">Brazil</th>
-					<td>confirmed</td>
-					<td>recovered</td>
-					<td>death</td>
-				</tr>
-				<tr>
-					<th scope="row">Brazil</th>
-					<td>confirmed</td>
-					<td>recovered</td>
-					<td>death</td>
-				</tr>
-				<tr>
-					<th scope="row">Brazil</th>
-					<td>confirmed</td>
-					<td>recovered</td>
-					<td>death</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
+		<div class="row">
+			<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+				<button class="btn btn-wide btn-icon btn-dark">
+					<i class="fa fa-refresh mr-2"></i>Update
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th>Country</th>
+				<th>Confirmed</th>
+				<th>Recovered</th>
+				<th>Deaths</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let country of countries">
+				<td>{{ country.Country }}</td>
+				<td>{{ country.Confirmed | number }}</td>
+				<td>{{ country.Recovered | number }}</td>
+				<td>{{ country.Deaths | number }}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

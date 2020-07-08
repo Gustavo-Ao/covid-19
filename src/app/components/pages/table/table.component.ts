@@ -1,7 +1,8 @@
 
+import { ToastrService } from 'ngx-toastr';
 import { CountryService } from './../../../services/country.service';
 import { Component, OnInit } from '@angular/core';
-import { CovidCases } from 'src/app/models/cases';
+import { Countries } from 'src/app/models/countries';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 
@@ -13,68 +14,73 @@ import { FormGroup } from '@angular/forms';
 export class TableComponent implements OnInit {
 
   public headers = ["Country", "Confirmed", "Recovered", "Deaths"];
-  public countries = ["Brazil", "Argentina", "Portugal", "China", "Uruguay"];
+  public countriesFilter = [
+    { countrySlug: 'brazil', countryCode: 'BR' },
+    { countrySlug: 'portugal', countryCode: 'PT' },
+    { countrySlug: 'china', countryCode: 'CN' },
+    { countrySlug: 'bolivia', countryCode: 'BO' },
+    { countrySlug: 'argentina', countryCode: 'AR' },
+  ];
 
-  public cases: CovidCases;
+  public countries: Countries[] = [];
 
   public recoveredCases: number = 0;
   public dateToday = new Date;
 
   public formDateCases: FormGroup;
 
-  public numberDeath: any[];
-  public numberRecovered: any[];
-  public numberConfirmed: any[];
-
   constructor(
     private countryService: CountryService,
     private datePipe: DatePipe,
+    private toastr: ToastrService
   ) { }
 
   public ngOnInit() {
+    const date = new Date();
+    const dateTransform = this.datePipe.transform(date, 'yyyy-MM-dd');
 
-    this.getConfirmed('Brazil');
+    this.getCountriesStatisticsByDate(dateTransform, true);
   }
 
 
-  public async getConfirmed(country: string) {
-    await this.countryService.getCasesOfCountry(country, 'confirmed')
-      .subscribe(data => console.log(data));
-  }
+  async getCountriesStatisticsByDate(date: string, firstLoad?: boolean) {
+    const [year, month, day] = date.split('-').map(Number);
+    this.dateToday = new Date(year, month - 1, day);
 
+    const fromDate = new Date(year, month - 1, day);
+    const toDate = new Date(year, month - 1, day + 1)
 
-  //metodos de data
-  public getDateYesterday(): string {
-    const date = this.dateToday.getDate() - 1;
-    const month = this.dateToday.getMonth() + 1;
-    const year = this.dateToday.getFullYear();
+    fromDate.setUTCHours(0);
+    toDate.setUTCHours(0);
 
-    if (month < 10) {
-      const transformDate = year + '-0' + month + '-' + date;
-      return transformDate + 'T00:00:00Z';
-    } else {
-      const transformDate = year + '-' + month + '-' + date;
-      return transformDate + 'T00:00:00Z';
+    const currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+    if (date === currentDate) {
+      fromDate.setDate(fromDate.getDate() - 1);
+      toDate.setDate(toDate.getDate() - 1);
     }
-  }
 
-  public formatDateToday(): string {
-    const date = this.datePipe.transform(this.dateToday, 'yyyy-MM-dd');
-    return date + 'T00:00:00Z';
-  }
+    await Promise.all(this.countriesFilter.map(({ countrySlug }) =>
+      this.countryService.getCasesOfCountry({
+        countrySlug,
+        fromDate,
+        toDate,
+      })
+        .then(([response]) => {
+          const countryIndex = this.countries.findIndex(
+            country => country.CountryCode === response.CountryCode
+          );
 
-  public compareDates(date: string, cases: number): boolean {
-    if (date == this.formatDateToday()) {
+          if (countryIndex >= 0) {
+            this.countries[countryIndex] = response;
+            return;
+          }
 
-      this.recoveredCases = cases;
-      return true
-    } else if (date == this.getDateYesterday()) {
-      console.log(date)
+          this.countries.push(response);
+        }),
+    ));
 
-      this.recoveredCases = cases;
-      return true
-    }
-    return false
+    if (!firstLoad) this.toastr.warning('teste');
   }
 
 }

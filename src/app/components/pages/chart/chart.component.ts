@@ -7,8 +7,7 @@ import { Label } from 'ng2-charts';
 import { CountryService } from '../../../services/country.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { config } from 'process';
-import { CovidCases } from 'src/app/models/cases';
+import { Countries } from 'src/app/models/countries';
 
 @Component({
   selector: 'app-chart',
@@ -41,7 +40,7 @@ export class ChartComponent implements OnInit {
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
 
-  public cases: CovidCases;
+  public cases: Countries;
   public covidCase: number = 0;
 
   public dateToday = new Date;
@@ -56,13 +55,13 @@ export class ChartComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.getDeathsByCountry(this.selectedCountry, this.statusOfCases);
+    // this.getDeathsByCountry(this.selectedCountry);
     console.log(this.getDateYesterday())
   }
 
-  public getDeathsByCountry(country: string, status: string): void {
-    this.countryService.getCasesOfCountry(country, status).subscribe(data => this.cases = data);
-  }
+  // public getDeathsByCountry(country: string): void {
+  //   this.countryService.getCasesConfirmedOfCountry(country).subscribe(data => this.cases = data);
+  // }
 
   public getDateYesterday(): string {
     const date = this.dateToday.getDate() - 1;
