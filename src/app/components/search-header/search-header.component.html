@@ -1,0 +1,24 @@
+<div class="search-header row justify-content-between mt-4">
+  <form [formGroup]="searchForm" (submit)="this.handleSubmitSearchForm()">
+    <div class="row">
+      <div class="form-group col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 ml-3">
+        <label for="date">Date</label>
+        <input type="date" class="form-control" formControlName="date" id="date">
+      </div>
+
+      <div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+        <button type="submit" class="btn btn-wide btn-icon btn-secondary">
+          Search<i class="fa fa-search ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="buttons col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+      <button type="button" class="btn btn-wide btn-icon btn-dark" (click)="this.handleSubmitSearchForm()">
+        <i class="fa fa-refresh mr-2"></i>
+        <span class="button-title">Update</span>
+      </button>
+    </div>
+  </div>
+</div>

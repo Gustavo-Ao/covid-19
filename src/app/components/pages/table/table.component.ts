@@ -80,7 +80,7 @@ export class TableComponent implements OnInit {
         }),
     ));
 
-    if (!firstLoad) this.toastr.warning('teste');
+    if (!firstLoad) this.toastr.success('Data is updated!');
   }
 
 }

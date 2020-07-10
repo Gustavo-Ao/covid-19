@@ -1,44 +1,35 @@
-<div class="content-align-center">
+<div class="card mt-3">
+  <div class="card-body">
+    <div class="content-align-center">
 
-	<div class="date-cases row justify-content-between">
-		<div class="row">
-			<div class="form-group col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 ml-3">
-				<label for="">Date</label>
-				<input type="date" class="form-control">
-			</div>
+      <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
+        (refreshFn)="this.getCountriesStatisticsByDate($event)">
+      </app-search-header>
 
-			<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
-				<button class="btn btn-wide btn-icon btn-secondary">
-					Search<i class="fa fa-search ml-2"></i>
-				</button>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
-				<button class="btn btn-wide btn-icon btn-dark">
-					<i class="fa fa-refresh mr-2"></i>Update
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<table class="table">
-		<thead class="thead-dark">
-			<tr>
-				<th>Country</th>
-				<th>Confirmed</th>
-				<th>Recovered</th>
-				<th>Deaths</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let country of countries">
-				<td>{{ country.Country }}</td>
-				<td>{{ country.Confirmed | number }}</td>
-				<td>{{ country.Recovered | number }}</td>
-				<td>{{ country.Deaths | number }}</td>
-			</tr>
-		</tbody>
-	</table>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Country</th>
+            <th>Confirmed</th>
+            <th>Recovered</th>
+            <th>Deaths</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let country of countries">
+            <td class="country">{{ country.Country }}</td>
+            <td>
+              <span>Confirmed</span> {{ country.Confirmed | number }}
+            </td>
+            <td>
+              <span>Recovered</span> {{ country.Recovered | number }}
+            </td>
+            <td>
+              <span>Deaths</span> {{ country.Deaths | number }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
