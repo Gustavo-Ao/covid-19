@@ -1,35 +1,51 @@
-<div class="card mt-3">
-  <div class="card-body">
-    <div class="content-align-center">
-
-      <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
-        (refreshFn)="this.getCountriesStatisticsByDate($event)">
-      </app-search-header>
-
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th>Country</th>
-            <th>Confirmed</th>
-            <th>Recovered</th>
-            <th>Deaths</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let country of countries">
-            <td class="country">{{ country.Country }}</td>
-            <td>
-              <span>Confirmed</span> {{ country.Confirmed | number }}
-            </td>
-            <td>
-              <span>Recovered</span> {{ country.Recovered | number }}
-            </td>
-            <td>
-              <span>Deaths</span> {{ country.Deaths | number }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
+  (refreshFn)="this.getCountriesStatisticsByDate($event)">
+</app-search-header>
+<div class="row">
+  <div class="cards col-12 col-sm-12 col-mg-12 col-lg-3 col-xl-3 mt">
+    <div class="card">
+      <h3>Confirmed:</h3>
+      <h4>{{ worldCases?.TotalConfirmed || 0 | number }}</h4>
+    </div>
+    <div class="card">
+      <h3>Recovered:</h3>
+      <h4>{{ worldCases?.TotalRecovered || 0 | number }}</h4>
+    </div>
+    <div class="card">
+      <h3>Death:</h3>
+      <h4>{{ worldCases?.TotalDeaths || 0 | number }}</h4>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <div class="content-align-center">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>Country</th>
+                <th>Confirmed</th>
+                <th>Recovered</th>
+                <th>Deaths</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let country of countries" (click)="handleOpenChart(country)">
+                <!-- <td class="country">{{ country.Country }}</td> -->
+                <td>
+                  <span>Confirmed: </span> {{ country.Confirmed | number }}
+                </td>
+                <td>
+                  <span>Recovered: </span> {{ country.Recovered | number }}
+                </td>
+                <td>
+                  <span>Deaths: </span> {{ country.Deaths | number }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

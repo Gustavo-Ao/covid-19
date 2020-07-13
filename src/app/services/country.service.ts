@@ -1,3 +1,4 @@
+import { TotalCasesOfTheWorld } from './../models/totalCases';
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
@@ -20,6 +21,12 @@ export class CountryService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  getTotalCasesInTheWorld(): Promise<TotalCasesOfTheWorld> {
+    return this.http
+      .get<TotalCasesOfTheWorld>(`${this.URL}/world/total`)
+      .toPromise();
+  }
 
   getCasesOfCountry({
     countrySlug,

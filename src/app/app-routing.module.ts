@@ -5,12 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-    { path: 'chart', component: ChartComponent },
-    { path: '', component: TableComponent }
+  { path: '', component: TableComponent },
+  { path: 'chart', component: ChartComponent },
+  { path: 'table', component: TableComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

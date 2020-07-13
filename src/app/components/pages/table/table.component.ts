@@ -1,3 +1,4 @@
+import { TotalCasesOfTheWorld } from './../../../models/totalCases';
 
 import { ToastrService } from 'ngx-toastr';
 import { CountryService } from './../../../services/country.service';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Countries } from 'src/app/models/countries';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -18,11 +20,12 @@ export class TableComponent implements OnInit {
     { countrySlug: 'brazil', countryCode: 'BR' },
     { countrySlug: 'portugal', countryCode: 'PT' },
     { countrySlug: 'china', countryCode: 'CN' },
-    { countrySlug: 'bolivia', countryCode: 'BO' },
+    { countrySlug: 'mexico', countryCode: 'MX' },
     { countrySlug: 'argentina', countryCode: 'AR' },
   ];
 
   public countries: Countries[] = [];
+  public worldCases: TotalCasesOfTheWorld;
 
   public recoveredCases: number = 0;
   public dateToday = new Date;
@@ -30,18 +33,21 @@ export class TableComponent implements OnInit {
   public formDateCases: FormGroup;
 
   constructor(
+    private router: Router,
     private countryService: CountryService,
     private datePipe: DatePipe,
     private toastr: ToastrService
   ) { }
 
-  public ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const date = new Date();
     const dateTransform = this.datePipe.transform(date, 'yyyy-MM-dd');
 
+    this.worldCases = await this.countryService.getTotalCasesInTheWorld();
+    console.log('Cases', this.worldCases)
+
     this.getCountriesStatisticsByDate(dateTransform, true);
   }
-
 
   async getCountriesStatisticsByDate(date: string, firstLoad?: boolean) {
     const [year, month, day] = date.split('-').map(Number);
@@ -80,7 +86,24 @@ export class TableComponent implements OnInit {
         }),
     ));
 
-    if (!firstLoad) this.toastr.success('Data is updated!');
+    if (!firstLoad) this.toastr.success('Data has been updated!');
+  }
+
+  handleOpenChart(country: Countries) {
+    const [{ countrySlug }] = this.countriesFilter.filter(
+      countryItem => countryItem.countryCode === country.CountryCode
+    );
+
+    this.router.navigate(['/chart'], {
+      queryParams: {
+        Country: country.Country,
+        Deaths: country.Deaths,
+        Confirmed: country.Confirmed,
+        Recovered: country.Recovered,
+        Date: this.dateToday.toISOString(),
+        Slug: countrySlug,
+      },
+    });
   }
 
 }
