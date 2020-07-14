@@ -1,25 +1,30 @@
-<div class="container-12">
-	<form>
-		<div class="chart-cases row container justify-content-between">
-			<div class="form-group col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-				<label for="exampleFormControlSelect1">Countries</label>
-				<select class="form-control" id="exampleFormControlSelect1">
-					<option>1</option>
-				</select>
-			</div>
+<div class="card mt-2">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-mg-12 col-lg-2 col-xl-2 mt-4">
+        <div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+          <button routerLink="/table" type="submit" class="btn btn-wide btn-icon secondary">
+            <i class="fa fa-chevron-left mr-2"></i>
+            <span class="button-title">Back</span>
+          </button>
+        </div>
+      </div>
 
-			<div class="buttons form-group col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-				<button class="btn btn-wide btn-icon btn-dark mr-5">
-					<i class="fa fa-refresh mr-2"></i>Update
-				</button>
-			</div>
-		</div>
+      <div class="col-10">
+        <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
+          (refreshFn)="this.getCountriesStatisticsByDate($event)">
+        </app-search-header>
+      </div>
+    </div>
 
-		<div class="canvas-cases">
-			<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-				[plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-			</canvas>
-		</div>
+    <div style="overflow: auto; width: auto; height: auto;">
+      <div class="canvas-cases">
+        <canvas baseChart [datasets]="this.barChartData" [labels]="this.barChartLabels" [options]="this.barChartOptions"
+          [plugins]="this.barChartPlugins" [legend]="this.barChartLegend" [chartType]="this.barChartType">
+        </canvas>
+      </div>
+    </div>
 
-	</form>
+
+  </div>
 </div>
