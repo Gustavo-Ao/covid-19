@@ -4,3 +4,8 @@
 nav a.active {
     color: #DCDCDC;
 }
+
+body {
+  background-color: #eff7f6;
+  font-family: 'Rowdies', cursive;
+}

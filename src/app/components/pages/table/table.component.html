@@ -21,7 +21,7 @@
       <div class="card-body">
         <div class="content-align-center">
           <table class="table table-hover">
-            <thead class="thead-dark">
+            <thead class="thead">
               <tr>
                 <th>Country</th>
                 <th>Confirmed</th>
@@ -31,7 +31,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let country of countries" (click)="handleOpenChart(country)">
-                <!-- <td class="country">{{ country.Country }}</td> -->
+                <td class="country">{{ country.Country }}</td>
                 <td>
                   <span>Confirmed: </span> {{ country.Confirmed | number }}
                 </td>

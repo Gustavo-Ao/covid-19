@@ -9,3 +9,16 @@ div.search-header {
 .buttons {
   margin-top: 33px;
 }
+
+.primary {
+  background-color: #5e548e;
+
+}
+
+.secondary {
+  background-color: #9f86c0;
+}
+
+.button-title, i {
+  color: #ffffff;
+}

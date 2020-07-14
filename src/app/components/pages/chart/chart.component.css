@@ -8,6 +8,14 @@
   flex: 1;
 }
 
+.secondary {
+  background-color: #9f86c0;
+}
+
+.button-title, i {
+  color: #ffffff;
+}
+
 .buttons {
   margin-top: 33px;
 }
@@ -24,6 +32,7 @@
 
 @media all and (max-width: 1000px) {
   .canvas-cases {
+    margin-top: 150px;
     width: auto;
     height: 300px;
   }
@@ -31,7 +40,12 @@
 
 @media all and (max-width: 600px) {
   .canvas-cases {
-    width: auto;
+    margin-top: 200px;
+    width: 600px;
     min-height: 500px;
+  }
+
+  .card {
+    height: 700px;
   }
 }

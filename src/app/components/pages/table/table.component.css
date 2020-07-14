@@ -2,6 +2,13 @@ table {
     cursor: pointer;
 }
 
+thead {
+  background-color: #231942;
+}
+th {
+  color: #ffffff
+}
+
 span {
     display: none;
 }
@@ -16,7 +23,7 @@ h3 {
 h4 {
   text-align: center;
 
-  margin-top: 20px;
+  margin-top: 21px;
   margin-bottom: 20px;
 }
 
