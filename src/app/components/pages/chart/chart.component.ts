@@ -1,7 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
 import { CountryService } from '../../../services/country.service';
@@ -76,8 +76,6 @@ export class ChartComponent implements OnInit {
       Slug,
     } = this.route.snapshot.queryParams;
 
-    console.log('Country', Country)
-
     this.countries.Country = Country;
     this.countries.Confirmed = Confirmed;
     this.countries.Deaths = Deaths;
@@ -93,7 +91,7 @@ export class ChartComponent implements OnInit {
 
   }
 
-  async getCountriesStatisticsByDate(date: string) {
+  async getCountriesStatisticsByDate(date: string): Promise<void> {
     const [year, month, day] = date.split('-').map(Number);
 
     const fromDate = new Date(year, month - 1, day);
@@ -126,7 +124,7 @@ export class ChartComponent implements OnInit {
     this.toastr.success(null, 'Data has been updated!');
   }
 
-  changeDataChart({ confirmed, recovered, deaths }: UpdateChartData) {
+  public changeDataChart({ confirmed, recovered, deaths }: UpdateChartData): void {
     this.barChartData = [
       { data: [confirmed], label: 'Confirmed' },
       { data: [recovered], label: 'Recovered' },

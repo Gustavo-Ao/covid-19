@@ -49,7 +49,7 @@ export class TableComponent implements OnInit {
     this.getCountriesStatisticsByDate(dateTransform, true);
   }
 
-  async getCountriesStatisticsByDate(date: string, firstLoad?: boolean) {
+  async getCountriesStatisticsByDate(date: string, firstLoad?: boolean): Promise<void> {
     const [year, month, day] = date.split('-').map(Number);
     this.dateToday = new Date(year, month - 1, day);
 
@@ -89,7 +89,7 @@ export class TableComponent implements OnInit {
     if (!firstLoad) this.toastr.success('Data has been updated!');
   }
 
-  handleOpenChart(country: Countries) {
+  public handleOpenChart(country: Countries): void {
     const [{ countrySlug }] = this.countriesFilter.filter(
       countryItem => countryItem.countryCode === country.CountryCode
     );

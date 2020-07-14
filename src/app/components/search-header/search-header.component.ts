@@ -12,14 +12,14 @@ export class SearchHeaderComponent implements OnInit {
 
   @Output() submitFn: EventEmitter<any> = new EventEmitter();
 
-  searchForm: FormGroup;
+  public searchForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private datePipe: DatePipe
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const date = this.datePipe.transform(
       this.date || new Date(), 'yyyy-MM-dd',
     );
@@ -36,7 +36,7 @@ export class SearchHeaderComponent implements OnInit {
 
   }
 
-  handleSubmitSearchForm(): void {
+  public handleSubmitSearchForm(): void {
     if (this.searchForm.invalid) return;
 
     const { date } = this.searchForm.getRawValue();

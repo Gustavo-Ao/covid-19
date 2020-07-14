@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let country of countries" (click)="handleOpenChart(country)">
+              <tr *ngFor="let country of countries" (click)="this.handleOpenChart(country)">
                 <td class="country">{{ country.Country }}</td>
                 <td>
                   <span>Confirmed: </span> {{ country.Confirmed | number }}
