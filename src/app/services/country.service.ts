@@ -22,13 +22,13 @@ export class CountryService {
     private http: HttpClient,
   ) { }
 
-  getTotalCasesInTheWorld(): Promise<TotalCasesOfTheWorld> {
+  public getTotalCasesInTheWorld(): Promise<TotalCasesOfTheWorld> {
     return this.http
       .get<TotalCasesOfTheWorld>(`${this.URL}/world/total`)
       .toPromise();
   }
 
-  getCasesOfCountry({
+  public getCasesOfCountry({
     countrySlug,
     fromDate,
     toDate,
