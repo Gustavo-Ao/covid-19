@@ -1,5 +1,5 @@
-import { TableComponent } from './components/pages/table/table.component';
-import { ChartComponent } from './components/pages/chart/chart.component';
+import { ChartComponent } from './pages/chart/chart.component';
+import { TableComponent } from './pages/table/table.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';

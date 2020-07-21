@@ -1,10 +1,10 @@
+import { CountryService } from './../../services/country.service';
 import { ToastrService } from 'ngx-toastr';
 
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
-import { CountryService } from '../../../services/country.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Countries } from 'src/app/models/countries';
@@ -19,7 +19,7 @@ interface UpdateChartData {
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
 

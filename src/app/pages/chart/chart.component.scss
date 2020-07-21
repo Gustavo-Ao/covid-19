@@ -9,7 +9,12 @@
 }
 
 .secondary {
-  background-color: #9f86c0;
+  background-color: #bcb8b1;
+  border-color: #8a817c;
+
+  &:hover {
+    background-color: #8a817c;
+  }
 }
 
 .button-title, i {
@@ -26,7 +31,7 @@
 @media all and (max-width: 1100px) {
   .canvas-cases {
     width: auto;
-    height: 300px;
+    height: 600px;
   }
 }
 
@@ -34,7 +39,7 @@
   .canvas-cases {
     margin-top: 150px;
     width: auto;
-    height: 300px;
+    height: 600px;
   }
 }
 

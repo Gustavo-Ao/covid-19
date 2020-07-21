@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-search-header',
   templateUrl: './search-header.component.html',
-  styleUrls: ['./search-header.component.css']
+  styleUrls: ['./search-header.component.scss']
 })
 export class SearchHeaderComponent implements OnInit {
   @Input() date?: Date;

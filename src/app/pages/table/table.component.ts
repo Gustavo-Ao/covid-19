@@ -1,9 +1,10 @@
-import { TotalCasesOfTheWorld } from './../../../models/totalCases';
+import { CountryService } from './../../services/country.service';
+import { Countries } from './../../models/countries';
+import { TotalCasesOfTheWorld } from './../../models/totalCases';
+
 
 import { ToastrService } from 'ngx-toastr';
-import { CountryService } from './../../../services/country.service';
 import { Component, OnInit } from '@angular/core';
-import { Countries } from 'src/app/models/countries';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
 

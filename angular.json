@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
@@ -122,5 +122,10 @@
       }
     }
   },
-  "defaultProject": "tese"
+  "defaultProject": "tese",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

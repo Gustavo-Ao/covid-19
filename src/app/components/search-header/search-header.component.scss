@@ -1,0 +1,33 @@
+div.search-header {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+  height: 65px;
+}
+
+.buttons {
+  margin-top: 33px;
+  font-weight: 100;
+}
+
+.primary {
+  background-color: #8a817c;
+
+  &:hover {
+    background-color: #463f3a;
+  }
+}
+
+.secondary {
+  background-color: #bcb8b1;
+  border-color: #8a817c;
+
+  &:hover {
+    background-color: #8a817c;
+  }
+}
+
+.button-title, i {
+  color: #ffffff;
+}

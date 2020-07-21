@@ -1,6 +1,7 @@
+import { ChartComponent } from './pages/chart/chart.component';
+import { TableComponent } from './pages/table/table.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ChartComponent } from './components/pages/chart/chart.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,7 +14,6 @@ import { AppComponent } from './app.component';
 import { ToastrModule, GlobalConfig as ToastrConfig } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { TableComponent } from './components/pages/table/table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
 
