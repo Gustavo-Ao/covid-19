@@ -1,22 +1,14 @@
 <div class="card mt-2">
-  <div class="card-body">
+  <div class="card-header">
     <div class="row">
-      <div class="col-12 col-sm-12 col-mg-12 col-lg-2 col-xl-2 mt-4">
-        <div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
-          <button routerLink="/table" type="submit" class="btn btn-wide btn-icon secondary">
-            <i class="fa fa-chevron-left mr-2"></i>
-            <span class="button-title">Back</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="col-10">
+      <div class="col-11">
         <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
           (refreshFn)="this.getCountriesStatisticsByDate($event)">
         </app-search-header>
       </div>
     </div>
-
+  </div>
+  <div class="card-body">
     <div style="overflow: auto; width: auto; height: auto;">
       <div class="canvas-cases">
         <canvas baseChart [datasets]="this.barChartData" [labels]="this.barChartLabels" [options]="this.barChartOptions"
@@ -24,7 +16,15 @@
         </canvas>
       </div>
     </div>
-
-
+  </div>
+  <div class="card-footer">
+    <div class="col-12 col-sm-12 col-mg-12 col-lg-2 col-xl-2">
+      <div class="buttons form-group col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+        <button routerLink="/table" type="submit" class="btn btn-wide btn-icon secondary">
+          <i class="fa fa-chevron-left mr-2"></i>
+          <span class="button-title">Back</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

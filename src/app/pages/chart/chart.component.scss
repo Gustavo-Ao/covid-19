@@ -21,9 +21,6 @@
   color: #ffffff;
 }
 
-.buttons {
-  margin-top: 33px;
-}
 .content-chart {
   justify-content: center;
 }
@@ -45,12 +42,12 @@
 
 @media all and (max-width: 600px) {
   .canvas-cases {
-    margin-top: 200px;
+    margin-top: 80px;
     width: 600px;
     min-height: 500px;
   }
 
   .card {
-    height: 700px;
+    height: 550px;
   }
 }

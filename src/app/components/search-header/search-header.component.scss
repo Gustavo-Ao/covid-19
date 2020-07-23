@@ -31,3 +31,9 @@ div.search-header {
 .button-title, i {
   color: #ffffff;
 }
+
+@media all and (max-width: 600px) {
+  .primary {
+    display: none;
+  }
+}

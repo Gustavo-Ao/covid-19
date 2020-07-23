@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="col-9">
+  <div class="col-12 col-lg-8">
     <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
       (refreshFn)="this.getCountriesStatisticsByDate($event)">
     </app-search-header>
   </div>
 </div>
 <div class="row">
-  <div class="col-9">
-    <div class="card">
+  <div class="col-12 col-lg-9">
+    <div class="card card-table">
       <div class="card-body">
         <div class="content-align-center">
-          <table>
+          <table class="countries-table">
             <thead>
               <tr class="head">
                 <th>Country</th>
@@ -23,13 +23,13 @@
               <tr class="content" *ngFor="let country of countries" (click)="this.handleOpenChart(country)">
                 <th class="country">{{ country.Country }}</th>
                 <td>
-                  <span>Confirmed </span> {{ country.Confirmed | number }}
+                  <span>C: </span> {{ country.Confirmed | number }}
                 </td>
                 <td>
-                  <span>Recovered </span> {{ country.Recovered | number }}
+                  <span>R: </span> {{ country.Recovered | number }}
                 </td>
                 <td>
-                  <span>Deaths </span> {{ country.Deaths | number }}
+                  <span>D: </span> {{ country.Deaths | number }}
                 </td>
               </tr>
             </tbody>

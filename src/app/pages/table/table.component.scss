@@ -72,49 +72,76 @@ h4 {
   margin-top: 20px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 480px) {
+  .countries-table thead {
+    display: none;
+  }
 
-    .buttons {
-        margin-left: 20px;
-        align-items: center;
-    }
+  .countries-table tr {
+    border-bottom: 1px solid #dddddd;
+  }
 
-    span {
-        display: block;
-        text-align: left;
-    }
+  .countries-table td {
+    border: 0;
+  }
 
-    table tbody tr td {
-        display: block;
-        text-align: right;
-    }
+  .countries-table td:not(:first-child) {
+    display: block;
+  }
 
-    table tbody tr td:before {
+  .card-table {
+    width: 100%;
+    margin-top: 100px;
+  }
 
-        content: attr(data-title);
-        position: absolute;
-        left: 15px;
-        display: block;
-        font-weight: 600;
-        font-size: 1em;
-    }
+  .country {
+    margin-left: 20px;
+  }
 
-    table {
-
-        border: none;
-    }
-
-    table thead {
-
-        display: none;
-    }
-
-    table tbody tr {
-
-        margin-bottom: 10px;
-        display: block;
-        border: 1px solid #dad6eb;
-    }
-
-
+  span {
+    display: inline;
+  }
 }
+
+// @media (max-width: 800px) {
+
+//     .buttons {
+//         margin-left: 20px;
+//         align-items: center;
+//     }
+
+//     span {
+//         display: block;
+//         text-align: left;
+//     }
+
+//     table {
+//       border: none;
+
+//       thead {
+//         display: none;
+//       }
+
+//       tbody {
+//         tr {
+//           margin-bottom: 10px;
+//           display: block;
+//           border: 1px solid #dad6eb;
+
+//           td {
+//             display: block;
+//             text-align: right;
+//           }
+
+//           td:before {
+//             content: attr(data-title);
+//             position: absolute;
+//             left: 15px;
+//             display: block;
+//             font-weight: 600;
+//             font-size: 1em;
+//           }
+//         }
+//       }
+//     }
+// }
