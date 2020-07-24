@@ -8,7 +8,7 @@
         </div>
 
         <div class="buttons col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
-          <button type="submit" class="btn btn-wide btn-icon secondary">
+          <button type="submit" class="btn btn-wide btn-icon secondary" mat-raised-button>
             <span class="button-title">Search</span>
             <i class="fa fa-search ml-2"></i>
           </button>
@@ -17,7 +17,8 @@
     </form>
   </div>
   <div class="buttons col-12 col-sm-2 col-md-1 col-lg-1 col-xl-1">
-    <button type="button" class="btn btn-wide btn-icon primary" (click)="this.handleSubmitSearchForm()">
+    <button type="button" class="btn btn-wide btn-icon primary" (click)="this.handleSubmitSearchForm()"
+      mat-raised-button>
       <span class="button-title">Update</span>
       <i class="fa fa-refresh ml-2"></i>
     </button>

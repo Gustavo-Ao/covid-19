@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { CountryService } from './../../services/country.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +17,12 @@ interface UpdateChartData {
   deaths: number;
 }
 
+interface CountriesSelect {
+  countrySlug: string,
+  countryCode: string,
+  countryName: string
+}
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -28,7 +35,7 @@ export class ChartComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     layout: {
-      padding: { bottom: 50 }
+      padding: { bottom: 50 },
     },
     scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
@@ -38,8 +45,8 @@ export class ChartComponent implements OnInit {
       }
     },
     legend: {
-      labels: { fontSize: 17 }
-    }
+      labels: { fontSize: 15 }
+    },
   };
 
   public barChartData: ChartDataSets[] = [
@@ -52,19 +59,37 @@ export class ChartComponent implements OnInit {
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
 
+
+  public countriesFilter = [
+    { countrySlug: 'brazil', countryCode: 'BR', countryName: 'Brazil' },
+    { countrySlug: 'portugal', countryCode: 'PT', countryName: 'Portugal' },
+    { countrySlug: 'china', countryCode: 'CN', countryName: 'China' },
+    { countrySlug: 'mexico', countryCode: 'MX', countryName: 'Mexico' },
+    { countrySlug: 'argentina', countryCode: 'AR', countryName: 'Argentina' },
+  ];
+
+  public countrySelect: string;
   public countries: Countries = {} as Countries;
 
   public cases: Countries;
   public covidCase: number = 0;
 
   public dateToday = new Date;
+  public dateInput: string;
+
+  public formChangeCountry: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private coutryService: CountryService,
     private toastr: ToastrService,
+    private formBuilder: FormBuilder,
     private datePipe: DatePipe
-  ) { }
+  ) {
+    this.formChangeCountry = this.formBuilder.group({
+      countrySearch: [null]
+    });
+  }
 
   public ngOnInit(): void {
     const {
@@ -92,6 +117,7 @@ export class ChartComponent implements OnInit {
   }
 
   async getCountriesStatisticsByDate(date: string): Promise<void> {
+    this.dateInput = date;
     const [year, month, day] = date.split('-').map(Number);
 
     const fromDate = new Date(year, month - 1, day);
@@ -122,6 +148,54 @@ export class ChartComponent implements OnInit {
     });
 
     this.toastr.success(null, 'Data has been updated!');
+  }
+
+  async changeChartData(date: string, countrySlug: string): Promise<void> {
+    const [year, month, day] = date.split('-').map(Number);
+
+    const fromDate = new Date(year, month - 1, day);
+    const toDate = new Date(year, month - 1, day + 1)
+
+    fromDate.setUTCHours(0);
+    toDate.setUTCHours(0);
+
+    const currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+    if (date === currentDate) {
+      fromDate.setDate(fromDate.getDate() - 1);
+      toDate.setDate(toDate.getDate() - 1);
+    }
+
+    const [responseCountry] = await this.coutryService.getCasesOfCountry({
+      countrySlug: countrySlug,
+      fromDate,
+      toDate,
+    });
+
+    this.countries = Object.assign(this.countries, responseCountry);
+
+    this.changeDataChart({
+      confirmed: this.countries.Confirmed,
+      recovered: this.countries.Recovered,
+      deaths: this.countries.Deaths,
+    });
+
+    this.toastr.success(null, 'Data has been updated!');
+  }
+
+  async changeCountry(country: CountriesSelect) {
+    const countrySlug = country.countryCode;
+    const dateFormat: string = this.datePipe.transform(this.countries.Date, 'yyyy-MM-dd');
+
+    this.barChartLabels[0] = country.countryName;
+    console.log('teste', countrySlug)
+    console.log('Data teste', this.dateInput)
+
+    if (this.dateInput) {
+      this.changeChartData(this.dateInput, countrySlug);
+    } else {
+      this.changeChartData(dateFormat, countrySlug);
+    }
   }
 
   public changeDataChart({ confirmed, recovered, deaths }: UpdateChartData): void {

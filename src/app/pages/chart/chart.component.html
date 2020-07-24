@@ -9,6 +9,20 @@
     </div>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+        <mat-form-field appearance="fill">
+          <mat-label>Countries</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let country of countriesFilter" [value]="country.countryCode"
+              (onSelectionChange)="this.changeCountry(country)">
+              {{country.countryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
     <div style="overflow: auto; width: auto; height: auto;">
       <div class="canvas-cases">
         <canvas baseChart [datasets]="this.barChartData" [labels]="this.barChartLabels" [options]="this.barChartOptions"

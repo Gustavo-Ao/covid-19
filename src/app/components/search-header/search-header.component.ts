@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -14,9 +15,12 @@ export class SearchHeaderComponent implements OnInit {
 
   public searchForm: FormGroup;
 
+  public dateNow = new Date();
+
   constructor(
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private toastr: ToastrService,
   ) { }
 
   public ngOnInit(): void {
@@ -40,6 +44,11 @@ export class SearchHeaderComponent implements OnInit {
     if (this.searchForm.invalid) return;
 
     const { date } = this.searchForm.getRawValue();
+
+    if (date > this.datePipe.transform(this.dateNow, 'yyyy-MM-dd')) {
+      this.toastr.warning(null, 'Date can not be larger the current date!');
+      return;
+    }
     console.log('date', date)
     this.submitFn.emit(date);
   }

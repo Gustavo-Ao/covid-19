@@ -20,7 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="content" *ngFor="let country of countries" (click)="this.handleOpenChart(country)">
+              <tr class="content mt-2" *ngFor="let country of countries" (click)="this.handleOpenChart(country)">
                 <th class="country">{{ country.Country }}</th>
                 <td>
                   <span>C: </span> {{ country.Confirmed | number }}

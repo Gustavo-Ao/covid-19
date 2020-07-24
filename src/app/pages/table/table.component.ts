@@ -77,7 +77,7 @@ export class TableComponent implements OnInit {
           const countryIndex = this.countries.findIndex(
             country => country.CountryCode === response.CountryCode
           );
-
+          console.log(response)
           if (countryIndex >= 0) {
             this.countries[countryIndex] = response;
             return;
