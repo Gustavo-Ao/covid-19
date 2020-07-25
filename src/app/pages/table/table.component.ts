@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
+
+  public countriesSubcription: Subscription;
+  public worldCasesSubcription: Subscription;
 
   public headers = ["Country", "Confirmed", "Recovered", "Deaths"];
   public countriesFilter = [
@@ -44,7 +48,9 @@ export class TableComponent implements OnInit {
     const date = new Date();
     const dateTransform = this.datePipe.transform(date, 'yyyy-MM-dd');
 
-    this.worldCases = await this.countryService.getTotalCasesInTheWorld();
+    this.worldCasesSubcription = this.countryService.getTotalCasesInTheWorld()
+      .subscribe(cases => this.worldCases = cases)
+
     console.log('Cases', this.worldCases)
 
     this.getCountriesStatisticsByDate(dateTransform, true);
@@ -67,13 +73,13 @@ export class TableComponent implements OnInit {
       toDate.setDate(toDate.getDate() - 1);
     }
 
-    await Promise.all(this.countriesFilter.map(({ countrySlug }) =>
-      this.countryService.getCasesOfCountry({
+    await forkJoin(this.countriesFilter.map(({ countrySlug }) =>
+      this.countriesSubcription = this.countryService.getCasesOfCountry({
         countrySlug,
         fromDate,
         toDate,
       })
-        .then(([response]) => {
+        .subscribe(([response]) => {
           const countryIndex = this.countries.findIndex(
             country => country.CountryCode === response.CountryCode
           );
@@ -105,6 +111,11 @@ export class TableComponent implements OnInit {
         Slug: countrySlug,
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.countriesSubcription.unsubscribe();
+    this.worldCasesSubcription.unsubscribe();
   }
 
 }

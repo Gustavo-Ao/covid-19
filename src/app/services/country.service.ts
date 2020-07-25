@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Countries } from '../models/countries';
+import { Observable } from 'rxjs';
 
 interface GetCountryByDateDTO {
   countrySlug: string;
@@ -22,23 +23,20 @@ export class CountryService {
     private http: HttpClient,
   ) { }
 
-  public getTotalCasesInTheWorld(): Promise<TotalCasesOfTheWorld> {
-    return this.http
-      .get<TotalCasesOfTheWorld>(`${this.URL}/world/total`)
-      .toPromise();
+  public getTotalCasesInTheWorld(): Observable<TotalCasesOfTheWorld> {
+    return this.http.get<TotalCasesOfTheWorld>(`${this.URL}/world/total`);
   }
 
   public getCasesOfCountry({
     countrySlug,
     fromDate,
     toDate,
-  }: GetCountryByDateDTO): Promise<Countries[]> {
+  }: GetCountryByDateDTO): Observable<Countries[]> {
     const fromDateString = fromDate.toISOString();
     const toDateString = toDate.toISOString();
     const endpoint = `country/${countrySlug}?from=${fromDateString}&to=${toDateString}`;
 
     return this.http
       .get<Countries[]>(`${this.URL}/${endpoint}`)
-      .toPromise();
   }
 }

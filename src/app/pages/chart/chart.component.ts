@@ -10,6 +10,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Countries } from 'src/app/models/countries';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 interface UpdateChartData {
   confirmed: number;
@@ -31,6 +32,8 @@ interface CountriesSelect {
 export class ChartComponent implements OnInit {
 
   @ViewChild('coutryCanvas', { static: true }) element: ElementRef;
+
+  public casesSubscribe: Subscription;
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -55,7 +58,7 @@ export class ChartComponent implements OnInit {
     { data: [0], label: 'Deaths' }
   ];
   public barChartLabels: Label[] = ['Brazil'];
-  public barChartType: ChartType = 'bar';
+  public chartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
 
@@ -113,7 +116,6 @@ export class ChartComponent implements OnInit {
       recovered: Number(Recovered),
       deaths: Number(Deaths),
     });
-
   }
 
   async getCountriesStatisticsByDate(date: string): Promise<void> {
@@ -133,13 +135,16 @@ export class ChartComponent implements OnInit {
       toDate.setDate(toDate.getDate() - 1);
     }
 
-    const [responseCountry] = await this.coutryService.getCasesOfCountry({
+    this.casesSubscribe = this.coutryService.getCasesOfCountry({
       countrySlug: this.countries.Slug,
       fromDate,
       toDate,
-    });
+    })
+      .subscribe(([response]) => {
+        const responseCountry = response;
 
-    this.countries = Object.assign(this.countries, responseCountry);
+        this.countries = Object.assign(this.countries, responseCountry);
+      });
 
     this.changeDataChart({
       confirmed: this.countries.Confirmed,
@@ -166,13 +171,17 @@ export class ChartComponent implements OnInit {
       toDate.setDate(toDate.getDate() - 1);
     }
 
-    const [responseCountry] = await this.coutryService.getCasesOfCountry({
+    this.casesSubscribe = this.coutryService.getCasesOfCountry({
       countrySlug: countrySlug,
       fromDate,
       toDate,
-    });
+    })
+      .subscribe(([response]) => {
+        const responseCountry = response;
 
-    this.countries = Object.assign(this.countries, responseCountry);
+        this.countries = Object.assign(this.countries, responseCountry);
+      });
+
 
     this.changeDataChart({
       confirmed: this.countries.Confirmed,
