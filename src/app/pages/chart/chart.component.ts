@@ -35,6 +35,7 @@ export class ChartComponent implements OnInit {
 
   public casesSubscribe: Subscription;
 
+  //Config bar chart
   public barChartOptions: ChartOptions = {
     responsive: true,
     layout: {
@@ -52,6 +53,24 @@ export class ChartComponent implements OnInit {
     },
   };
 
+  //COnfig pie chart
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+    legend: { position: 'top' },
+    layout: {
+      padding: { top: 50 },
+    },
+    plugins: {
+      datalabels: {
+        formatter: (_, ctx) => {
+          const label = ctx.chart.data.labels[ctx.dataIndex];
+          return label;
+        },
+      },
+    },
+    aspectRatio: 1.5,
+  }
+
   public barChartData: ChartDataSets[] = [
     { data: [0], label: 'Confirmed' },
     { data: [0], label: 'Recovered' },
@@ -62,6 +81,12 @@ export class ChartComponent implements OnInit {
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
 
+  // Configuration of pie chart
+  public pieChartLabels: Label[] = ['Confirmed', 'Recovered', 'Deaths'];
+  public pieChartData: number[] = [0, 0, 0];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public chartColors = [{ backgroundColor: ['#06d6a0', '#f15bb5', '#eeef20'] }];
 
   public countriesFilter = [
     { countrySlug: 'brazil', countryCode: 'BR', countryName: 'Brazil' },
@@ -82,6 +107,12 @@ export class ChartComponent implements OnInit {
 
   public formChangeCountry: FormGroup;
 
+  // Retriever browser resolution
+  public width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  public height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+  public teste = window.onresize;
+
   constructor(
     private route: ActivatedRoute,
     private coutryService: CountryService,
@@ -95,6 +126,8 @@ export class ChartComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+
+    //retrieving route data
     const {
       Country,
       Confirmed,
@@ -120,7 +153,7 @@ export class ChartComponent implements OnInit {
 
   async getCountriesStatisticsByDate(date: string): Promise<void> {
     this.dateInput = date;
-    const [year, month, day] = date.split('-').map(Number);
+    const [year, month, day] = date.split('-').map(Number); //  format date
 
     const fromDate = new Date(year, month - 1, day);
     const toDate = new Date(year, month - 1, day + 1)
@@ -135,6 +168,7 @@ export class ChartComponent implements OnInit {
       toDate.setDate(toDate.getDate() - 1);
     }
 
+    // call service
     this.casesSubscribe = this.coutryService.getCasesOfCountry({
       countrySlug: this.countries.Slug,
       fromDate,
@@ -153,6 +187,16 @@ export class ChartComponent implements OnInit {
     });
 
     this.toastr.success(null, 'Data has been updated!');
+  }
+
+  // Action for resolution change in browser
+  public changeResolution() {
+    this.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    this.height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+    if (this.width > 990 && this.width < 1000) {
+      this.toastr.info(null, 'The chart has been changed for you better experience!');
+    }
   }
 
   async changeChartData(date: string, countrySlug: string): Promise<void> {
@@ -182,7 +226,6 @@ export class ChartComponent implements OnInit {
         this.countries = Object.assign(this.countries, responseCountry);
       });
 
-
     this.changeDataChart({
       confirmed: this.countries.Confirmed,
       recovered: this.countries.Recovered,
@@ -193,6 +236,7 @@ export class ChartComponent implements OnInit {
   }
 
   async changeCountry(country: CountriesSelect) {
+    // Format date
     const countrySlug = country.countryCode;
     const dateFormat: string = this.datePipe.transform(this.countries.Date, 'yyyy-MM-dd');
 
@@ -200,6 +244,7 @@ export class ChartComponent implements OnInit {
     console.log('teste', countrySlug)
     console.log('Data teste', this.dateInput)
 
+    // Call changeChartData() in changing date
     if (this.dateInput) {
       this.changeChartData(this.dateInput, countrySlug);
     } else {
@@ -213,5 +258,7 @@ export class ChartComponent implements OnInit {
       { data: [recovered], label: 'Recovered' },
       { data: [deaths], label: 'Deaths' }
     ];
+
+    this.pieChartData = [confirmed, recovered, deaths];
   }
 }

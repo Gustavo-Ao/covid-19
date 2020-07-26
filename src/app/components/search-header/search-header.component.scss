@@ -37,3 +37,14 @@ div.search-header {
     display: none;
   }
 }
+
+@media all and (max-width: 400px) {
+  .button-title {
+    display: none;
+  }
+
+  .secondary {
+    width: 100%;
+    height: 40px;
+  }
+}

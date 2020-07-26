@@ -5,6 +5,7 @@ table {
 
     tr {
       font-size: 18px;
+      text-align: center;
     }
 
     th {
@@ -103,46 +104,3 @@ h4 {
     display: inline;
   }
 }
-
-// @media (max-width: 800px) {
-
-//     .buttons {
-//         margin-left: 20px;
-//         align-items: center;
-//     }
-
-//     span {
-//         display: block;
-//         text-align: left;
-//     }
-
-//     table {
-//       border: none;
-
-//       thead {
-//         display: none;
-//       }
-
-//       tbody {
-//         tr {
-//           margin-bottom: 10px;
-//           display: block;
-//           border: 1px solid #dad6eb;
-
-//           td {
-//             display: block;
-//             text-align: right;
-//           }
-
-//           td:before {
-//             content: attr(data-title);
-//             position: absolute;
-//             left: 15px;
-//             display: block;
-//             font-weight: 600;
-//             font-size: 1em;
-//           }
-//         }
-//       }
-//     }
-// }

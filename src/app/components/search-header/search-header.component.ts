@@ -24,6 +24,7 @@ export class SearchHeaderComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    // Format date
     const date = this.datePipe.transform(
       this.date || new Date(), 'yyyy-MM-dd',
     );
@@ -37,7 +38,6 @@ export class SearchHeaderComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       date: [formattedDate, Validators.required]
     })
-
   }
 
   public handleSubmitSearchForm(): void {
@@ -49,7 +49,7 @@ export class SearchHeaderComponent implements OnInit {
       this.toastr.warning(null, 'Date can not be larger the current date!');
       return;
     }
-    console.log('date', date)
+
     this.submitFn.emit(date);
   }
 

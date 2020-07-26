@@ -10,7 +10,7 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+      <div class="options col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7">
         <mat-form-field appearance="fill">
           <mat-label>Countries</mat-label>
           <mat-select>
@@ -23,13 +23,21 @@
       </div>
     </div>
 
-    <div style="overflow: auto; width: auto; height: auto;">
-      <div class="canvas-cases">
-        <canvas baseChart [datasets]="this.barChartData" [labels]="this.barChartLabels" [options]="this.barChartOptions"
-          [plugins]="this.barChartPlugins" [legend]="this.barChartLegend" [chartType]="this.chartType">
-        </canvas>
-      </div>
+    <div (window:resize)="this.changeResolution()">
+
     </div>
+    <div class="canvas-cases" *ngIf="this.width > 1000">
+      <canvas baseChart [datasets]="this.barChartData" [labels]="this.barChartLabels" [options]="this.barChartOptions"
+        [plugins]="this.barChartPlugins" [legend]="this.barChartLegend" [chartType]="this.chartType"
+        [colors]="chartColors">
+      </canvas>
+    </div>
+    <div *ngIf="this.width < 1000" class="pie-chart">
+      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+        [options]="pieChartOptions" [colors]="chartColors" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+
   </div>
   <div class="card-footer">
     <div class="col-12 col-sm-12 col-mg-12 col-lg-2 col-xl-2">
