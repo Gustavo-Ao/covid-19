@@ -8,5 +8,4 @@ First clone the project in a directory of your choice. After this step run the c
 ## Preview
 <img src="https://github.com/Gustavo-Ao/covid-19/blob/master/src/assets/img/screenTable.png">
 <img src="https://github.com/Gustavo-Ao/covid-19/blob/master/src/assets/img/screenChart.png">
-### In Mobile Devices
 <img src="https://github.com/Gustavo-Ao/covid-19/blob/master/src/assets/img/screenChartMobile.png">
