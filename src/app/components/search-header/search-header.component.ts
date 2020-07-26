@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -5,7 +6,7 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-search-header',
   templateUrl: './search-header.component.html',
-  styleUrls: ['./search-header.component.css']
+  styleUrls: ['./search-header.component.scss']
 })
 export class SearchHeaderComponent implements OnInit {
   @Input() date?: Date;
@@ -14,12 +15,16 @@ export class SearchHeaderComponent implements OnInit {
 
   public searchForm: FormGroup;
 
+  public dateNow = new Date();
+
   constructor(
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private toastr: ToastrService,
   ) { }
 
   public ngOnInit(): void {
+    // Format date
     const date = this.datePipe.transform(
       this.date || new Date(), 'yyyy-MM-dd',
     );
@@ -33,14 +38,18 @@ export class SearchHeaderComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       date: [formattedDate, Validators.required]
     })
-
   }
 
   public handleSubmitSearchForm(): void {
     if (this.searchForm.invalid) return;
 
     const { date } = this.searchForm.getRawValue();
-    console.log('date', date)
+
+    if (date > this.datePipe.transform(this.dateNow, 'yyyy-MM-dd')) {
+      this.toastr.warning(null, 'Date can not be larger the current date!');
+      return;
+    }
+
     this.submitFn.emit(date);
   }
 

@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-12 col-lg-8">
+    <app-search-header (submitFn)="this.getCountriesStatisticsByDate($event)"
+      (refreshFn)="this.getCountriesStatisticsByDate($event)">
+    </app-search-header>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-lg-9">
+    <div class="card card-table">
+      <div class="card-body">
+        <div class="content-align-center">
+          <table class="countries-table">
+            <thead>
+              <tr class="head">
+                <th>Country</th>
+                <th>Confirmed</th>
+                <th>Recovered</th>
+                <th>Deaths</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="content mt-2" *ngFor="let country of countries" (click)="this.handleOpenChart(country)">
+                <th class="country">{{ country.Country }}</th>
+                <td>
+                  <span>C: </span> {{ country.Confirmed | number }}
+                </td>
+                <td>
+                  <span>R: </span> {{ country.Recovered | number }}
+                </td>
+                <td>
+                  <span>D: </span> {{ country.Deaths | number }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards col-12 col-sm-12 col-mg-12 col-lg-3 col-xl-3">
+    <h2>World Cases</h2>
+    <div class="card">
+      <h3>Confirmed</h3>
+      <h4>{{ worldCases?.TotalConfirmed || 0 | number }}</h4>
+    </div>
+    <div class="card">
+      <h3>Recovered</h3>
+      <h4>{{ worldCases?.TotalRecovered || 0 | number }}</h4>
+    </div>
+    <div class="card">
+      <h3>Death</h3>
+      <h4>{{ worldCases?.TotalDeaths || 0 | number }}</h4>
+    </div>
+  </div>
+</div>

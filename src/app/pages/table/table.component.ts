@@ -1,20 +1,26 @@
-import { TotalCasesOfTheWorld } from './../../../models/totalCases';
+import { CountryService } from './../../services/country.service';
+import { Countries } from './../../models/countries';
+import { TotalCasesOfTheWorld } from './../../models/totalCases';
+
 
 import { ToastrService } from 'ngx-toastr';
-import { CountryService } from './../../../services/country.service';
 import { Component, OnInit } from '@angular/core';
-import { Countries } from 'src/app/models/countries';
 import { DatePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
 
+  public countriesSubcription: Subscription;
+  public worldCasesSubcription: Subscription;
+
+  // standard info of table
   public headers = ["Country", "Confirmed", "Recovered", "Deaths"];
   public countriesFilter = [
     { countrySlug: 'brazil', countryCode: 'BR' },
@@ -40,16 +46,19 @@ export class TableComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+    // format date
     const date = new Date();
     const dateTransform = this.datePipe.transform(date, 'yyyy-MM-dd');
 
-    this.worldCases = await this.countryService.getTotalCasesInTheWorld();
-    console.log('Cases', this.worldCases)
+    // get data of world cases in service
+    this.worldCasesSubcription = this.countryService.getTotalCasesInTheWorld()
+      .subscribe(cases => this.worldCases = cases)
 
     this.getCountriesStatisticsByDate(dateTransform, true);
   }
 
   async getCountriesStatisticsByDate(date: string, firstLoad?: boolean): Promise<void> {
+    // format date
     const [year, month, day] = date.split('-').map(Number);
     this.dateToday = new Date(year, month - 1, day);
 
@@ -66,13 +75,14 @@ export class TableComponent implements OnInit {
       toDate.setDate(toDate.getDate() - 1);
     }
 
-    await Promise.all(this.countriesFilter.map(({ countrySlug }) =>
-      this.countryService.getCasesOfCountry({
+    // call of getCasesOfCountry in service
+    await forkJoin(this.countriesFilter.map(({ countrySlug }) =>
+      this.countriesSubcription = this.countryService.getCasesOfCountry({
         countrySlug,
         fromDate,
         toDate,
       })
-        .then(([response]) => {
+        .subscribe(([response]) => {
           const countryIndex = this.countries.findIndex(
             country => country.CountryCode === response.CountryCode
           );
@@ -94,6 +104,7 @@ export class TableComponent implements OnInit {
       countryItem => countryItem.countryCode === country.CountryCode
     );
 
+    // listening to route data
     this.router.navigate(['/chart'], {
       queryParams: {
         Country: country.Country,
@@ -104,6 +115,11 @@ export class TableComponent implements OnInit {
         Slug: countrySlug,
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.countriesSubcription.unsubscribe();
+    this.worldCasesSubcription.unsubscribe();
   }
 
 }
